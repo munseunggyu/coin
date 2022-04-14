@@ -8,7 +8,7 @@ interface Params{
 function Coin(){
   const {coinId} = useParams<Params>();
 
-  return <h1>Coin</h1>
+  return <h1>Coin {coinId} </h1>
 }
 
 export default Coin;

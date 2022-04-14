@@ -48,6 +48,7 @@ table {
 }
 a{
   text-decoration:none;
+	color:inherit;
 }
 body {
 	line-height: 1;
