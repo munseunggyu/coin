@@ -60,15 +60,13 @@ body {
   box-sizing:border-box;
 }
 `
-
 function App() {
   
   return (
-    <>
+		<>
       <GlobalStyle />
       <Router />
-			
-    </>
+			</ >
   );
 }
 
