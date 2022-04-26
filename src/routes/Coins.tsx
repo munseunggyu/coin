@@ -72,7 +72,7 @@ function Coins(){
       <CoinList>
         {coins.map((coin) => 
            <Coin key={coin.id} >
-             <Link to={`/${coin.id}`} onClick={()=> {console.log(`/${coin.id}`)}} >
+             <Link to={`/${coin.id}`} state={{name:coin.name}} >
               {coin.name}&rarr;
             </Link>
            </Coin>
