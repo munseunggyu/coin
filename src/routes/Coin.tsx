@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useQuery } from 'react-query';
-import {useParams,useLocation,Outlet,Link,useMatch} from 'react-router-dom';
+import {useParams,useLocation,Link,useMatch, Routes,Route} from 'react-router-dom';
 import styled from 'styled-components';
 import { fetchCoinInfo, fetchCoinTickers } from '../api';
-
+import Chart from './Chart';
+import Price from './Price';
 
 const Container = styled.div`
   padding:0 20px;
@@ -134,7 +135,13 @@ function Coin(){
   const priceMatch = useMatch("/:coinId/price")
   const chartMatch = useMatch("/:coinId/chart")
   const {isLoading : infoLoading , data: infoData} = useQuery<IInfo>(["info",coinId],() => fetchCoinInfo(coinId))
-  const {isLoading : tickersLoading , data: tickersData} = useQuery<IPrice>(["tickers",coinId],() => fetchCoinTickers(coinId))
+  const {isLoading : tickersLoading , data: tickersData} = useQuery<IPrice>(
+    ["tickers",coinId],
+    () => fetchCoinTickers(coinId),
+    {
+      refetchInterval:5000,
+    }
+  );
   // const [loading,setLoding] = useState(true)
   // const [info,setInfo] = useState<IInfo>()
   // const [priceInfo,setPriceInfo] = useState<IPrice>()
@@ -169,8 +176,8 @@ function Coin(){
             <span>${infoData?.symbol}</span>
           </OverviewItem>
           <OverviewItem>
-            <span>Open Source:</span>
-            <span>{infoData?.open_source ? "Yes" : "No"}</span>
+            <span>Price:</span>
+            <span>{tickersData?.quotes.USD.price.toFixed(3)}</span>
           </OverviewItem>
         </Overview>
         <Description>{infoData?.description}</Description>
@@ -192,7 +199,10 @@ function Coin(){
               <Link to={`/${coinId}/price`}>Price</Link>
             </Tab>
           </Tabs>
-        <Outlet />
+        <Routes>
+          <Route path='price' element={<Price />} />
+          <Route path='chart' element={<Chart coinId={coinId} />} />
+        </Routes>
 
       </>
       )}
