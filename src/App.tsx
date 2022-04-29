@@ -1,7 +1,11 @@
 import React, { useState } from 'react';
 import './App.css';
-import styled,{createGlobalStyle} from 'styled-components';
+import styled,{createGlobalStyle, ThemeProvider} from 'styled-components';
 import Router from './Router';
+import {isDarkAtom} from './atoms';
+import {useRecoilValue} from 'recoil';
+
+import { DarkTheme, lightTheme } from './theme';
 
 const GlobalStyle = createGlobalStyle`
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100&family=Palette+Mosaic&family=Source+Sans+Pro&display=swap');
@@ -61,12 +65,14 @@ body {
 }
 `
 function App() {
-  
-  return (
+	const isDark = useRecoilValue(isDarkAtom)
+	return (
 		<>
-      <GlobalStyle />
-      <Router />
-			</ >
+			<ThemeProvider theme={isDark ? DarkTheme :lightTheme}>
+				<GlobalStyle />
+      	<Router />
+			</ThemeProvider>
+		</ >
   );
 }
 

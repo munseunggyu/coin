@@ -162,7 +162,11 @@ function Coin(){
   return (
     <Container>
       <Header>
-        <Title> {state?.name ? state.name : loading ? "Loading..." : infoData?.name} </Title>
+        <Title> {state?.name ? state.name : loading ? "Loading..." : (
+          <Link to="/">
+           { infoData?.name}
+          </Link>
+          )} </Title>
       </Header>
       {loading ? <Loader>Loading...</Loader> : (
         <>
